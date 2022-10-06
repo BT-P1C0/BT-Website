@@ -23,7 +23,7 @@ map.addControl(
 map.on('load', () => {
     map.addSource('route', {
         'type': 'geojson',
-        'data': "data/H.geojson"
+        'data': "data/H1.geojson"
     });
 
     map.addLayer({
@@ -90,18 +90,51 @@ map.on('load', () => {
     );
 });
 
-const busList = document.getElementById('menu');
-const inputs = busList.getElementsByTagName('input');
+var busNo = "H";
+var shiftNo = "1";
+const busList = document.getElementById('bus');
+const busInputs = busList.getElementsByTagName('input');
 
-for (const input of inputs) {
+for (const input of busInputs) {
     input.onclick = (bus) => {
-        const busNo = bus.target.value;
+        busNo = bus.target.value;
         map.removeLayer('route')
         map.removeSource('route')
 
         map.addSource('route', {
             'type': 'geojson',
-            'data': `data/${busNo}.geojson`
+            'data': `data/${busNo + shiftNo}.geojson`
+        });
+        map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#05cb63',
+                'line-width': 8,
+                'line-opacity': 0.8,
+            }
+        }, "road-label-small");
+
+    };
+}
+
+const shiftList = document.getElementById('shift');
+const shiftInputs = shiftList.getElementsByTagName('input');
+
+for (const input of shiftInputs) {
+    input.onclick = (shift) => {
+        shiftNo = shift.target.value;
+        map.removeLayer('route')
+        map.removeSource('route')
+
+        map.addSource('route', {
+            'type': 'geojson',
+            'data': `data/${busNo + shiftNo}.geojson`
         });
         map.addLayer({
             'id': 'route',
