@@ -153,3 +153,26 @@ for (const input of shiftInputs) {
 
     };
 }
+
+var lat, lng;
+const marker = new mapboxgl.Marker()
+    .setLngLat([0, 0])
+    .addTo(map);
+
+pubnub = new PubNub({
+    publishKey: "pub-c-448b0aed-e6f8-4536-a1e4-f235af33663b",
+    subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
+    uuid: "client"
+});
+pubnub.subscribe({
+    channels: ["h_bus"]
+})
+pubnub.addListener({
+    message: function (message) {
+        console.log(message)
+        lat = message.message.lat;
+        lng = message.message.lng;
+        map.setCenter([lng, lat]);
+        marker.setLngLat([lng, lat]);
+    }
+})
