@@ -160,7 +160,6 @@ const marker = new mapboxgl.Marker()
     .addTo(map);
 
 pubnub = new PubNub({
-    publishKey: "pub-c-448b0aed-e6f8-4536-a1e4-f235af33663b",
     subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
     uuid: "client"
 });
