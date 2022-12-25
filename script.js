@@ -2,7 +2,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibGFrc2h5YWplZXQiLCJhIjoiY2tuMWM2amttMHN0NDJ3c
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/navigation-guidance-night-v4',
+    style: 'mapbox://styles/lakshyajeet/clc3bmrhi005y14s1vk7tqr45',
     center: [79.51, 29.1869],
     zoom: 12,
     doubleClickZoom: false,
@@ -39,7 +39,7 @@ map.on('load', () => {
             'line-width': 8,
             'line-opacity': 0.8,
         }
-    }, "road-label-small");
+    }, "road-label-navigation");
 
     map.loadImage(
         'media/logo.png',
@@ -118,7 +118,7 @@ for (const input of busInputs) {
                 'line-width': 8,
                 'line-opacity': 0.8,
             }
-        }, "road-label-small");
+        }, "road-label-navigation");
 
     };
 }
@@ -149,7 +149,7 @@ for (const input of shiftInputs) {
                 'line-width': 8,
                 'line-opacity': 0.8,
             }
-        }, "road-label-small");
+        }, "road-label-navigation");
 
     };
 }
