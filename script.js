@@ -171,7 +171,7 @@ pubnub.addListener({
 			console.log(err);
 		}
 		console.log(timeDelay);
-		map.flyTo({ center: [busLat, busLnglat], zoom: 15 });
+		map.flyTo({ center: [busLat, busLng], zoom: 15 });
 		busMarker.setLngLat([busLat, busLng]);
 	},
 });
