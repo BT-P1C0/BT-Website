@@ -5,7 +5,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #222;
+    background-color: #2c3035;
 }
 
 #map {
@@ -17,11 +17,10 @@ html, body {
 }
 
 #menu {
-    margin-top: 10px;
-    margin-left: 10px;
+    margin: 10px;
     border-radius: 10px;
     position: absolute;
-    background: #333;
+    background: #2c3035;
     padding: auto;
     font-family: 'Open Sans', sans-serif;
     color: aliceblue;
@@ -34,7 +33,7 @@ html, body {
 }
 
 .mapboxgl-ctrl-group {
-    background: #333;
+    background: #2c3035;
 }
 
 
