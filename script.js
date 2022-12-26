@@ -134,24 +134,20 @@ function timeDelta(utc) {
 	currentMinutes = currentTime.getUTCMinutes();
 	currentSeconds = currentTime.getUTCSeconds();
 	console.log(currentHours + ":" + currentMinutes + ":" + currentSeconds);
-	if (currentSeconds > seconds) {
-		deltaSeconds = currentSeconds - seconds;
-	} else {
+
+	deltaSeconds = currentSeconds - seconds;
+	if (currentSeconds < seconds) {
 		currentMinutes -= 1;
-		deltaSeconds = currentSeconds + 60 - seconds;
+		deltaSeconds += 60;
 	}
-
+	deltaMinutes = currentMinutes - minutes;
 	if (currentMinutes >= minutes) {
-		deltaMinutes = currentMinutes - minutes;
-	} else {
 		currentHours -= 1;
-		deltaMinutes = currentMinutes + 60 - minutes;
+		deltaMinutes += 60;
 	}
-
+	deltaHours = currentHours - hours;
 	if (currentHours >= hours) {
-		deltaHours = currentHours - hours;
-	} else {
-		deltaHours = currentHours + 24 - hours;
+		deltaHours += 24;
 	}
 	return deltaHours + ":" + deltaMinutes + ":" + deltaSeconds;
 }
@@ -169,7 +165,6 @@ pubnub.addListener({
 		busLat = message.message.lat;
 		busLng = message.message.lng;
 		utcTime = message.message.utc;
-		console.log(utcTime);
 		try {
 			timeDelay = timeDelta(utcTime);
 		} catch (err) {
@@ -177,6 +172,6 @@ pubnub.addListener({
 		}
 		console.log(timeDelay);
 		map.flyTo({ center: [busLat, busLnglat], zoom: 15 });
-		busMarker.setLngLat([lbusLatng, lbusLngat]);
+		busMarker.setLngLat([busLatng, busLngat]);
 	},
 });
