@@ -29,5 +29,6 @@
         "minimal-ui"
     ],
     "display": "standalone",
-    "orientation": "portrait-primary"
+    "orientation": "portrait-primary",
+    "start_url": "https://mg-lsj.github.io/Bus-Tracker"
 }
