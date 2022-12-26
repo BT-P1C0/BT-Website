@@ -5,6 +5,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-color: #222;
 }
 
 #map {
@@ -20,10 +21,11 @@ html, body {
     margin-left: 10px;
     border-radius: 10px;
     position: absolute;
-    background: #222;
+    background: #333;
     padding: auto;
     font-family: 'Open Sans', sans-serif;
     color: aliceblue;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .1)
 }
 
 .submenu {
@@ -32,7 +34,7 @@ html, body {
 }
 
 .mapboxgl-ctrl-group {
-    background: #222;
+    background: #333;
 }
 
 
