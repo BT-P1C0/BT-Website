@@ -15,11 +15,6 @@
             "src": "media/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
-        },
-        {
-            "src": "media/apple-touch-startup-image.png",
-            "sizes": "320x480",
-            "type": "image/png"
         }
     ],
     "theme_color": "#2c3035",

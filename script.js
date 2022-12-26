@@ -120,10 +120,43 @@ map.on("load", () => {
 	});
 });
 
-var lat, lng;
-const marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+const busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
 
-pubnub = new PubNub({
+function timeDelta(utc) {
+	hours = Math.floor(utc / 10000);
+	utc %= 10000;
+	minutes = Math.floor(utc / 100);
+	utc %= 100;
+	seconds = utc;
+	console.log(hours + ":" + minutes + ":" + seconds);
+	let currentTime = new Date();
+	currentHours = currentTime.getUTCHours();
+	currentMinutes = currentTime.getUTCMinutes();
+	currentSeconds = currentTime.getUTCSeconds();
+	console.log(currentHours + ":" + currentMinutes + ":" + currentSeconds);
+	if (currentSeconds > seconds) {
+		deltaSeconds = currentSeconds - seconds;
+	} else {
+		currentMinutes -= 1;
+		deltaSeconds = currentSeconds + 60 - seconds;
+	}
+
+	if (currentMinutes >= minutes) {
+		deltaMinutes = currentMinutes - minutes;
+	} else {
+		currentHours -= 1;
+		deltaMinutes = currentMinutes + 60 - minutes;
+	}
+
+	if (currentHours >= hours) {
+		deltaHours = currentHours - hours;
+	} else {
+		deltaHours = currentHours + 24 - hours;
+	}
+	return deltaHours + ":" + deltaMinutes + ":" + deltaSeconds;
+}
+
+const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
 	uuid: "webClient",
 });
@@ -133,9 +166,17 @@ pubnub.subscribe({
 pubnub.addListener({
 	message: function (message) {
 		console.log(message);
-		lat = message.message.lat;
-		lng = message.message.lng;
-		map.flyTo({ center: [lng, lat], zoom: 15 });
-		marker.setLngLat([lng, lat]);
+		busLat = message.message.lat;
+		busLng = message.message.lng;
+		utcTime = message.message.utc;
+		console.log(utcTime);
+		try {
+			timeDelay = timeDelta(utcTime);
+		} catch (err) {
+			console.log(err);
+		}
+		console.log(timeDelay);
+		map.flyTo({ center: [busLat, busLnglat], zoom: 15 });
+		busMarker.setLngLat([lbusLatng, lbusLngat]);
 	},
 });
