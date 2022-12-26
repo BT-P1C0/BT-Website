@@ -120,8 +120,6 @@ map.on("load", () => {
 	});
 });
 
-const busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
-
 function timeDelta(utc) {
 	hours = Math.floor(utc / 10000);
 	utc %= 10000;
@@ -141,16 +139,18 @@ function timeDelta(utc) {
 		deltaSeconds += 60;
 	}
 	deltaMinutes = currentMinutes - minutes;
-	if (currentMinutes >= minutes) {
+	if (currentMinutes < minutes) {
 		currentHours -= 1;
 		deltaMinutes += 60;
 	}
 	deltaHours = currentHours - hours;
-	if (currentHours >= hours) {
+	if (currentHours < hours) {
 		deltaHours += 24;
 	}
 	return deltaHours + ":" + deltaMinutes + ":" + deltaSeconds;
 }
+
+const busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
 
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
