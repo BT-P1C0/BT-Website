@@ -135,7 +135,7 @@ pubnub.addListener({
 		console.log(message);
 		lat = message.message.lat;
 		lng = message.message.lng;
-		map.flyTo([lng, lat]);
+		map.flyTo({ center: [lng, lat], zoom: 15 });
 		marker.setLngLat([lng, lat]);
 	},
 });
