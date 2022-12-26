@@ -150,7 +150,7 @@ function timeDelta(utc) {
 	return deltaHours + ":" + deltaMinutes + ":" + deltaSeconds;
 }
 
-const busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+var busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
 
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
@@ -171,7 +171,11 @@ pubnub.addListener({
 			console.log(err);
 		}
 		console.log(timeDelay);
-		map.flyTo({ center: [busLng, busLat], zoom: 15 });
-		busMarker.setLngLat([busLng, busLat]);
+		try {
+			map.flyTo({ center: [busLng, busLat], zoom: 15 });
+			busMarker.setLngLat([busLng, busLat]);
+		} catch (err) {
+			console.log(err);
+		}
 	},
 });
