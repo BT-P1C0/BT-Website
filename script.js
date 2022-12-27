@@ -200,7 +200,7 @@ const busMarker = new mapboxgl.Marker({
 if ("vibrate" in navigator) {
 	busMarkerElement.onclick = () => {
 		console.log("click");
-		navigator.vibrate(500);
+		navigator.vibrate(100);
 	};
 }
 // Pubnub
