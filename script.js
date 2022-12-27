@@ -189,6 +189,7 @@ var parsedUtcTime = { hours: 0, minutes: 0, seconds: 0 };
 // Bus marker
 const busMarkerPopup = new mapboxgl.Popup();
 const busMarkerElement = document.createElement("div");
+busMarkerElement.onclick = navigator.vibrate(200);
 busMarkerElement.className = "bus-marker-element";
 const busMarker = new mapboxgl.Marker({
 	element: busMarkerElement,
