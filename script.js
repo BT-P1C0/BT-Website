@@ -120,62 +120,110 @@ map.on("load", () => {
 	});
 });
 
-function timeDelta(utc) {
-	hours = Math.floor(utc / 10000);
-	utc %= 10000;
-	minutes = Math.floor(utc / 100);
-	utc %= 100;
-	seconds = utc;
-	console.log(hours + ":" + minutes + ":" + seconds);
+// Timestamp Related Functions
+function timeInIST(parsedUtcTimeObject) {
+	var hours = parsedUtcTimeObject.hours + 5;
+	var minutes = parsedUtcTimeObject.minutes + 30;
+	var seconds = parsedUtcTimeObject.seconds;
+
+	if (minutes >= 60) {
+		minutes -= 60;
+		hours++;
+	}
+	if (hours >= 24) {
+		hours -= 24;
+	}
+	return (
+		(hours > 12 ? hours - 12 : hours) +
+		":" +
+		(minutes > 9 ? minutes : "0" + minutes) +
+		":" +
+		(seconds > 9 ? seconds : "0" + seconds) +
+		" " +
+		(hours > 12 || (hours == 12 && minutes > 0) ? "PM" : "AM")
+	);
+}
+function parseUTC(utc_timestamp) {
+	return {
+		hours: Math.floor(utc_timestamp / 10000),
+		minutes: Math.floor((utc_timestamp % 10000) / 100),
+		seconds: utc_timestamp % 100,
+	};
+}
+function timeDelta(utc_timestamp) {
 	let currentTime = new Date();
 	currentHours = currentTime.getUTCHours();
 	currentMinutes = currentTime.getUTCMinutes();
 	currentSeconds = currentTime.getUTCSeconds();
-	console.log(currentHours + ":" + currentMinutes + ":" + currentSeconds);
 
-	deltaSeconds = currentSeconds - seconds;
-	if (currentSeconds < seconds) {
-		currentMinutes -= 1;
+	deltaSeconds = currentSeconds - utc_timestamp.seconds;
+	if (currentSeconds < utc_timestamp.seconds) {
+		currentMinutes--;
 		deltaSeconds += 60;
 	}
-	deltaMinutes = currentMinutes - minutes;
-	if (currentMinutes < minutes) {
-		currentHours -= 1;
+	deltaMinutes = currentMinutes - utc_timestamp.minutes;
+	if (currentMinutes < utc_timestamp.minutes) {
+		currentHours--;
 		deltaMinutes += 60;
 	}
-	deltaHours = currentHours - hours;
-	if (currentHours < hours) {
+	deltaHours = currentHours - utc_timestamp.hours;
+	if (currentHours < utc_timestamp.hours) {
 		deltaHours += 24;
 	}
-	return deltaHours + ":" + deltaMinutes + ":" + deltaSeconds;
+	return (
+		(deltaHours > 0 ? deltaHours + "hrs " : "") +
+		(deltaMinutes > 0 ? deltaMinutes + "mins " : "") +
+		(deltaSeconds > 0 ? deltaSeconds + "s " : "")
+	);
 }
+function updateTimeDelay() {
+	busMarkerPopup.setHTML(
+		`Last updated at: ${timeInIST(parsedUtcTime)}<br>${timeDelta(
+			parsedUtcTime
+		)} ago`
+	);
+	setTimeout(updateTimeDelay, 1000);
+}
+var parsedUtcTime = { hours: 0, minutes: 0, seconds: 0 };
 
-var busMarker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+// Bus marker
+const busMarkerPopup = new mapboxgl.Popup();
+const busMarkerElement = document.createElement("div");
+busMarkerElement.className = "bus-marker-element";
+const busMarker = new mapboxgl.Marker({
+	element: busMarkerElement,
+	anchor: "center",
+})
+	.setLngLat([0, 0])
+	.addTo(map)
+	.setPopup(busMarkerPopup);
+
+// Pubnub
 
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
 	uuid: "webClient",
 });
 pubnub.subscribe({
-	channels: ["bus_H"],
+	channels: ["bus_H", "h_bus"],
 });
 pubnub.addListener({
 	message: function (message) {
 		console.log(message);
 		busLat = message.message.lat;
 		busLng = message.message.lng;
-		utcTime = message.message.utc;
-		try {
-			timeDelay = timeDelta(utcTime);
-		} catch (err) {
-			console.log(err);
-		}
-		console.log(timeDelay);
-		try {
-			map.flyTo({ center: [busLng, busLat], zoom: 15 });
-			busMarker.setLngLat([busLng, busLat]);
-		} catch (err) {
-			console.log(err);
+		if (busLat && busLng) {
+			try {
+				parsedUtcTime = parseUTC(message.message.utc);
+				timeDelay = timeDelta(parsedUtcTime);
+				console.log("Time Delta: " + timeDelay);
+				map.flyTo({ center: [busLng, busLat] });
+				busMarker.setLngLat([busLng, busLat]);
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	},
 });
+
+updateTimeDelay();
