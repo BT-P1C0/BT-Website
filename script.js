@@ -157,7 +157,7 @@ const pubnub = new PubNub({
 	uuid: "webClient",
 });
 pubnub.subscribe({
-	channels: ["h_bus"],
+	channels: ["bus_H"],
 });
 pubnub.addListener({
 	message: function (message) {
