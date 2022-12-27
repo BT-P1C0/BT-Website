@@ -198,10 +198,7 @@ const busMarker = new mapboxgl.Marker({
 	.addTo(map)
 	.setPopup(busMarkerPopup);
 if ("vibrate" in navigator) {
-	busMarkerElement.onclick = () => {
-		console.log("click");
-		navigator.vibrate(100);
-	};
+	busMarkerElement.onclick = navigator.vibrate(100);
 }
 // Pubnub
 
