@@ -189,10 +189,6 @@ var parsedUtcTime = { hours: 0, minutes: 0, seconds: 0 };
 // Bus marker
 const busMarkerPopup = new mapboxgl.Popup();
 const busMarkerElement = document.createElement("div");
-if ("vibrate" in navigator) {
-	// Vibration supported
-	busMarkerElement.onclick = navigator.vibrate(200);
-}
 busMarkerElement.className = "bus-marker-element";
 const busMarker = new mapboxgl.Marker({
 	element: busMarkerElement,
@@ -201,7 +197,12 @@ const busMarker = new mapboxgl.Marker({
 	.setLngLat([0, 0])
 	.addTo(map)
 	.setPopup(busMarkerPopup);
-
+if ("vibrate" in navigator) {
+	busMarkerElement.onclick = () => {
+		console.log("click");
+		navigator.vibrate(500);
+	};
+}
 // Pubnub
 
 const pubnub = new PubNub({
