@@ -20,7 +20,7 @@ map.addControl(
 	}),
 	"bottom-right"
 );
-map.addControl(new busTrackingStateSwitcher(), "top-right");
+map.addControl(new busTrackingStateSwitcher(), "bottom-right");
 
 const busInputs = document.getElementById("bus").getElementsByTagName("input");
 const shiftInputs = document
@@ -142,29 +142,23 @@ const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
 	uuid: "webClient",
 });
+pubnub.fetchMessages(
+	{
+		channels: ["bus_H"],
+		count: 1,
+	},
+	function (status, response) {
+		if ((status.statusCode = 200))
+			updateBusMarker(response.channels["bus_H"][0].message);
+	}
+);
 pubnub.subscribe({
 	channels: ["bus_H", "h_bus"],
 });
 pubnub.addListener({
 	message: function (message) {
 		console.log(message);
-		busLat = message.message.lat;
-		busLng = message.message.lng;
-		if (busLat && busLng) {
-			try {
-				parsedUtcTime = parseUTC(message.message.utc);
-				timeDelay = timeDelta(parsedUtcTime);
-				console.log("Time Delta: " + timeDelay);
-				if (trackingLock) {
-					map.flyTo({ center: [busLng, busLat] });
-				}
-				busMarker.setLngLat([busLng, busLat]);
-				updatebusMarkerPopup();
-			} catch (err) {
-				console.log(err);
-			}
-		}
+		updateBusMarker(message.message);
 	},
 });
-
 updateTimeDelay();
