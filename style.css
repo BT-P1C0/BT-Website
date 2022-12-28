@@ -53,12 +53,16 @@ html, body {
 }
 
 .mapboxgl-ctrl-bus-track {
-    background-image: url("media/bus-solid.svg");
+    background-image: url("media/button-bus.svg");
     background-size: cover;
 }
 
 .mapboxgl-ctrl-bus-track.enabled {
-    background-image: url("media/bus-color.svg");
+    background-image: url("media/button-bus-track.svg");
+}
+
+.mapboxgl-ctrl-bus-track.enabled.focused {
+    background-image: url("media/button-bus-track-focus.svg") !important;
 }
 
 .bus-marker-element {
