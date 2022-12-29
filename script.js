@@ -152,13 +152,30 @@ pubnub.fetchMessages(
 			updateBusMarker(response.channels["bus_H"][0].message);
 	}
 );
+
 pubnub.subscribe({
 	channels: ["bus_H", "h_bus"],
 });
 pubnub.addListener({
 	message: function (message) {
 		console.log(message);
+	},
+	presence: function (message) {
+		console.log(message);
+	},
+	signal: function (message) {
+		console.log(message);
 		updateBusMarker(message.message);
 	},
 });
 updateTimeDelay();
+
+// pubnub.hereNow(
+// 	{
+// 		channels: ["bus_H"],
+// 		includeUUIDs: true,
+// 	},
+// 	function (status, response) {
+// 		console.log(status, response);
+// 	}
+// );
