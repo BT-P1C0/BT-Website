@@ -1,4 +1,5 @@
 // Timestamp Related Functions
+var parsedUtcTime = { hours: 0, minutes: 0, seconds: 0 };
 
 function timeInIST(parsedUtcTimeObject) {
 	var hours = parsedUtcTimeObject.hours + 5;
@@ -74,6 +75,7 @@ function updateBusMarker(message) {
 				map.flyTo({ center: [busLng, busLat] });
 			}
 			busMarker.setLngLat([busLng, busLat]);
+			trackingFocus();
 			updateBusMarkerPopup();
 		} catch (err) {
 			console.log(err);
@@ -84,4 +86,3 @@ function updateTimeDelay() {
 	updateBusMarkerPopup();
 	setTimeout(updateTimeDelay, 1000);
 }
-var parsedUtcTime = { hours: 0, minutes: 0, seconds: 0 };

@@ -37,7 +37,7 @@ class busTrackingStateSwitcher {
 		};
 
 		map.on("drag", () => {
-			this.trackingUnfocus();
+			trackingUnfocus();
 		});
 		this._container = document.createElement("div");
 		this._container.className = "mapboxgl-ctrl-group mapboxgl-ctrl";
@@ -49,16 +49,18 @@ class busTrackingStateSwitcher {
 		this._container.parentNode.removeChild(this._container);
 		this._map = undefined;
 	}
-	trackingUnfocus() {
-		if (trackingLockState && trackingFocusState) {
-			trackingFocusState = false;
-			this._btn.classList.remove("focused");
-		}
+}
+
+function trackingUnfocus() {
+	if (trackingLockState && trackingFocusState) {
+		trackingFocusState = false;
+		document.getElementById("bus-track-button").classList.remove("focused");
 	}
-	trackingFocus() {
-		if (trackingFocusState && !trackingFocusState) {
-			trackingFocusState = true;
-			this._btn.classList.add("focused");
-		}
+}
+
+function trackingFocus() {
+	if (trackingLockState && !trackingFocusState) {
+		trackingFocusState = true;
+		document.getElementById("bus-track-button").classList.add("focused");
 	}
 }
