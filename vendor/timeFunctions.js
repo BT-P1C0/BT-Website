@@ -53,35 +53,8 @@ function timeDelta(utc_timestamp) {
 	return (
 		(deltaHours > 0 ? deltaHours + "hrs " : "") +
 		(deltaMinutes > 0 ? deltaMinutes + "mins " : "") +
-		(deltaSeconds > 0 ? deltaSeconds + "s " : "")
+		(deltaSeconds > 0 ? deltaSeconds + "s" : "")
 	);
-}
-function updateBusMarkerPopup() {
-	busMarkerPopup.setHTML(
-		`Last updated at: ${timeInIST(parsedUtcTime)}<br>${timeDelta(
-			parsedUtcTime
-		)} ago`
-	);
-}
-function updateBusMarker(message) {
-	busLat = message.lat;
-	busLng = message.lng;
-	if (busLat && busLng) {
-		try {
-			parsedUtcTime = parseUTC(message.utc);
-			timeDelay = timeDelta(parsedUtcTime);
-			console.log("Time Delta: " + timeDelay);
-			if (trackingLockState) {
-				map.flyTo({ center: [busLng, busLat] });
-			}
-			busMarker.addTo(map);
-			busMarker.setLngLat([busLng, busLat]);
-			trackingFocus();
-			updateBusMarkerPopup();
-		} catch (err) {
-			console.log(err);
-		}
-	}
 }
 function updateTimeDelay() {
 	updateBusMarkerPopup();
