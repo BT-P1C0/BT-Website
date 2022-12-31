@@ -74,6 +74,7 @@ function updateBusMarker(message) {
 			if (trackingLockState) {
 				map.flyTo({ center: [busLng, busLat] });
 			}
+			busMarker.addTo(map);
 			busMarker.setLngLat([busLng, busLat]);
 			trackingFocus();
 			updateBusMarkerPopup();
