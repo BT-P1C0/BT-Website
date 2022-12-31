@@ -1,3 +1,22 @@
+const pubnub = new PubNub({
+	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
+	uuid: "webClient",
+});
+
+pubnub.addListener({
+	message: function (message) {
+		console.log(message.message);
+		updateBusMarker(message.message);
+	},
+	presence: function (message) {
+		console.log(message);
+	},
+	signal: function (message) {
+		console.log(message.message);
+		updateBusMarker(message.message);
+	},
+});
+
 mapboxgl.accessToken =
 	"pk.eyJ1IjoibGFrc2h5YWplZXQiLCJhIjoiY2tuMWM2amttMHN0NDJ3cXVxOGJsY3p4MiJ9.LuGi_8FfhyDQHtWqHRgcjw";
 
@@ -30,7 +49,7 @@ const shiftInputs = document
 for (const input of busInputs) {
 	input.onclick = (bus) => {
 		busNo = bus.target.value;
-		changeBusRoute();
+		changeBusRoute(true);
 	};
 	if (input.checked) {
 		busNo = input.value;
@@ -47,43 +66,13 @@ for (const input of shiftInputs) {
 	}
 }
 
-function changeBusRoute() {
-	if (map.getLayer("route")) {
-		map.removeLayer("route");
-	}
-	if (map.getSource("route")) {
-		map.removeSource("route");
-	}
-	map.addSource("route", {
-		type: "geojson",
-		data: `data/${busNo + shiftNo}.geojson`,
-	});
-	map.addLayer(
-		{
-			id: "route",
-			type: "line",
-			source: "route",
-			layout: {
-				"line-join": "round",
-				"line-cap": "round",
-			},
-			paint: {
-				"line-color": "#05cb63",
-				"line-width": 8,
-				"line-opacity": 0.8,
-			},
-		},
-		"road-label-navigation"
-	);
-}
-
 map.on("load", () => {
-	changeBusRoute();
+	changeBusRoute(true);
 	//GEHU Icon
 	map.loadImage("media/logo.png", (error, image) => {
 		if (error) throw error;
 		map.addImage("cat", image);
-		map.addSource("point", {
+		map.addSource("GEHU-icon", {
 			type: "geojson",
 			data: {
 				type: "FeatureCollection",
@@ -101,7 +90,7 @@ map.on("load", () => {
 		map.addLayer({
 			id: "points",
 			type: "symbol",
-			source: "point",
+			source: "GEHU-icon",
 			layout: {
 				"icon-image": "cat",
 				"icon-size": [
@@ -133,49 +122,64 @@ const busMarker = new mapboxgl.Marker({
 	.addTo(map)
 	.setPopup(busMarkerPopup);
 if ("vibrate" in navigator) {
-	busMarkerElement.onclick = navigator.vibrate(100);
+	busMarkerElement.onclick = navigator.vibrate(250);
 }
 
-// Pubnub
-
-const pubnub = new PubNub({
-	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
-	uuid: "webClient",
-});
-pubnub.fetchMessages(
-	{
-		channels: ["bus_H"],
-		count: 1,
-	},
-	function (status, response) {
-		if ((status.statusCode = 200))
-			updateBusMarker(response.channels["bus_H"][0].message);
-	}
-);
-
-pubnub.subscribe({
-	channels: ["bus_H", "h_bus"],
-});
-pubnub.addListener({
-	message: function (message) {
-		console.log(message);
-	},
-	presence: function (message) {
-		console.log(message);
-	},
-	signal: function (message) {
-		console.log(message);
-		updateBusMarker(message.message);
-	},
-});
 updateTimeDelay();
 
-// pubnub.hereNow(
-// 	{
-// 		channels: ["bus_H"],
-// 		includeUUIDs: true,
-// 	},
-// 	function (status, response) {
-// 		console.log(status, response);
-// 	}
-// );
+function changeTrackedBus() {
+	let channel = `bus_${busNo}`;
+	pubnub.unsubscribeAll();
+	busMarker.remove();
+	try {
+		pubnub.fetchMessages(
+			{
+				channels: [channel],
+				count: 1,
+			},
+			function (status, response) {
+				if ((status.statusCode = 200) && response)
+					updateBusMarker(response.channels[channel][0].message);
+			}
+		);
+	} catch {
+		console.log("Unable to load history.");
+	}
+	pubnub.subscribe({
+		channels: [channel],
+	});
+}
+
+function changeBusRoute(busChange) {
+	if (map.getLayer("route")) {
+		map.removeLayer("route");
+	}
+	if (map.getSource("route")) {
+		map.removeSource("route");
+	}
+	map.addSource("route", {
+		type: "geojson",
+		data: `data/${busNo + shiftNo}.geojson`,
+	});
+	map.addLayer(
+		{
+			id: "route",
+			type: "line",
+			source: "route",
+			layout: {
+				"line-join": "round",
+				"line-cap": "round",
+			},
+			paint: {
+				"line-color": "#05cb63",
+				"line-width": 8,
+				"line-opacity": 0.8,
+			},
+		},
+		"road-label-navigation"
+	);
+
+	if (busChange) {
+		changeTrackedBus();
+	}
+}
