@@ -131,6 +131,9 @@ function changeTrackedBus() {
 	let channel = `bus_${busNo}`;
 	pubnub.unsubscribeAll();
 	busMarker.remove();
+	busLat = null;
+	busLan = null;
+	setTrackingState(0);
 	try {
 		pubnub.fetchMessages(
 			{

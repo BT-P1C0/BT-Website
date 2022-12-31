@@ -1,38 +1,33 @@
-var trackingLockState = false;
-var trackingFocusState = false;
+// 	Tracking states -
+// 		0: searching
+// 		1: unlocked
+// 		2: locked & focused
+// 		3: locked & unfocus
+
+var trackingState = 0;
 
 class busTrackingStateSwitcher {
 	onAdd(map) {
-		let _this = this;
-		this.map = map;
+		this._map = map;
 		this._btn = document.createElement("button");
 		this._btn.id = "bus-track-button";
-		this._btn.className = "mapboxgl-ctrl-icon mapboxgl-ctrl-bus-track";
+		this._btn.className =
+			"mapboxgl-ctrl-icon mapboxgl-ctrl-bus-track searching";
 		this._btn.type = "button";
 		this._btn.onclick = function () {
-			if (!trackingLockState) {
-				_this._btn.classList.add("enabled");
-				_this._btn.classList.add("focused");
-				trackingLockState = true;
-				trackingFocusState = true;
-				try {
-					if (busLat && busLng) {
-						map.flyTo({ center: [busLng, busLat], zoom: 15 });
-					}
-				} catch (err) {}
-			} else if (trackingLockState && !trackingFocusState) {
-				trackingFocusState = true;
-				_this._btn.classList.add("focused");
-				try {
-					if (busLat && busLng) {
-						map.flyTo({ center: [busLng, busLat], zoom: 15 });
-					}
-				} catch (err) {}
-			} else {
-				trackingLockState = false;
-				trackingFocusState = false;
-				_this._btn.classList.remove("enabled");
-				_this._btn.classList.remove("focused");
+			switch (trackingState) {
+				case 0:
+					break;
+				case 1:
+					setTrackingState(2);
+					break;
+				case 2:
+					setTrackingState(1);
+					break;
+				case 3:
+					map.flyTo({ center: [busLng, busLat], zoom: 15 });
+					setTrackingState(2);
+					break;
 			}
 		};
 
@@ -52,15 +47,42 @@ class busTrackingStateSwitcher {
 }
 
 function trackingUnfocus() {
-	if (trackingLockState && trackingFocusState) {
-		trackingFocusState = false;
-		document.getElementById("bus-track-button").classList.remove("focused");
+	if (trackingState == 2) {
+		setTrackingState(3);
 	}
 }
-
 function trackingFocus() {
-	if (trackingLockState && !trackingFocusState) {
-		trackingFocusState = true;
-		document.getElementById("bus-track-button").classList.add("focused");
+	if (trackingState == 3) {
+		setTrackingState(2);
+	}
+}
+function setTrackingState(state) {
+	var btn = document.getElementById("bus-track-button");
+	switch (state) {
+		case 0:
+			btn.classList.remove("focused");
+			btn.classList.remove("locked");
+			btn.classList.add("searching");
+			trackingState = 0;
+			break;
+		case 1:
+			btn.classList.remove("focused");
+			btn.classList.remove("locked");
+			btn.classList.remove("searching");
+			trackingState = 1;
+			break;
+		case 2:
+			btn.classList.remove("searching");
+			btn.classList.add("focused");
+			btn.classList.add("locked");
+			trackingState = 2;
+			map.flyTo({ center: [busLng, busLat], zoom: 15 });
+			break;
+		case 3:
+			btn.classList.remove("searching");
+			btn.classList.remove("focused");
+			btn.classList.add("locked");
+			trackingState = 3;
+			break;
 	}
 }

@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    margin: 0;
 }
 
 html, body {
@@ -57,11 +58,15 @@ html, body {
     background-size: cover;
 }
 
-.mapboxgl-ctrl-bus-track.enabled {
+.mapboxgl-ctrl-bus-track.searching {
+    background-image: url("media/button-bus-searching.svg");
+}
+
+.mapboxgl-ctrl-bus-track.locked {
     background-image: url("media/button-bus-track.svg");
 }
 
-.mapboxgl-ctrl-bus-track.enabled.focused {
+.mapboxgl-ctrl-bus-track.locked.focused {
     background-image: url("media/button-bus-track-focus.svg") !important;
 }
 
@@ -74,4 +79,8 @@ html, body {
     width: 48px;
     background-size: 100%;
     cursor: pointer;
+}
+
+.bus-marker-element.live {
+    background-image: url("media/bus-icon-live.png");
 }
