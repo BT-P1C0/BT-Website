@@ -71,6 +71,7 @@ html, body {
 }
 
 .bus-marker-element {
+    z-index: 1;
     display: block;
     border: none;
     padding: 0;
@@ -83,4 +84,12 @@ html, body {
 
 .bus-marker-element.live {
     background-image: url("media/bus-icon-live.png");
+}
+
+.mapboxgl-popup {
+    z-index: 3;
+}
+
+.mapboxgl-user-location {
+    z-index: 2;
 }

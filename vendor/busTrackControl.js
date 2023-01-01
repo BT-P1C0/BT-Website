@@ -5,7 +5,7 @@
 // 		3: locked & unfocus
 
 var trackingState = 0;
-
+var routeBounds;
 class busTrackingStateSwitcher {
 	onAdd(map) {
 		this._map = map;
@@ -70,6 +70,11 @@ function setTrackingState(state) {
 			btn.classList.remove("locked");
 			btn.classList.remove("searching");
 			trackingState = 1;
+			if (routeBounds) {
+				map.fitBounds(routeBounds, {
+					padding: 50,
+				});
+			}
 			break;
 		case 2:
 			btn.classList.remove("searching");
