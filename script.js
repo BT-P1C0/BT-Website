@@ -225,6 +225,9 @@ function changeBusRoute(busChange) {
 			map.fitBounds(routeBounds, {
 				padding: 50,
 			});
+		})
+		.catch((err) => {
+			console.log("Route not found");
 		});
 
 	if (busChange) {
