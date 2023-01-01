@@ -27,6 +27,7 @@ const map = new mapboxgl.Map({
 	zoom: 12,
 	hash: true,
 	maxPitch: 45,
+	doubleClickZoom: false,
 });
 
 map.addControl(
@@ -72,7 +73,7 @@ map.on("load", () => {
 	map.loadImage("media/logo.png", (error, image) => {
 		if (error) throw error;
 		map.addImage("cat", image);
-		map.addSource("GEHU-icon", {
+		map.addSource("GEHU-icon-source", {
 			type: "geojson",
 			data: {
 				type: "FeatureCollection",
@@ -88,9 +89,9 @@ map.on("load", () => {
 			},
 		});
 		map.addLayer({
-			id: "points",
+			id: "GEHU-icon-layer",
 			type: "symbol",
-			source: "GEHU-icon",
+			source: "GEHU-icon-source",
 			layout: {
 				"icon-image": "cat",
 				"icon-size": [
@@ -105,6 +106,22 @@ map.on("load", () => {
 					0.2,
 				],
 			},
+		});
+		map.on("dblclick", "GEHU-icon-layer", (e) => {
+			map.flyTo({
+				center: e.features[0].geometry.coordinates,
+				zoom: 15,
+			});
+		});
+
+		// Change the cursor to a pointer when the it enters a feature in the 'circle' layer.
+		map.on("mouseenter", "GEHU-icon-layer", () => {
+			map.getCanvas().style.cursor = "pointer";
+		});
+
+		// Change it back to a pointer when it leaves.
+		map.on("mouseleave", "GEHU-icon-layer", () => {
+			map.getCanvas().style.cursor = "";
 		});
 	});
 });
@@ -122,8 +139,13 @@ const busMarker = new mapboxgl.Marker({
 	.addTo(map)
 	.setPopup(busMarkerPopup);
 if ("vibrate" in navigator) {
-	busMarkerElement.onclick = navigator.vibrate(250);
+	busMarkerElement.onclick = () => {
+		navigator.vibrate(250);
+	};
 }
+busMarkerElement.ondblclick = () => {
+	setTrackingState(2);
+};
 
 updateTimeDelay();
 
@@ -160,27 +182,53 @@ function changeBusRoute(busChange) {
 	if (map.getSource("route")) {
 		map.removeSource("route");
 	}
-	map.addSource("route", {
-		type: "geojson",
-		data: `data/${busNo + shiftNo}.geojson`,
-	});
-	map.addLayer(
-		{
-			id: "route",
-			type: "line",
-			source: "route",
-			layout: {
-				"line-join": "round",
-				"line-cap": "round",
-			},
-			paint: {
-				"line-color": "#05cb63",
-				"line-width": 8,
-				"line-opacity": 0.8,
-			},
-		},
-		"road-label-navigation"
-	);
+	fetch(`data/${busNo + shiftNo}.geojson`)
+		.then((response) => {
+			return response.json();
+		})
+		.then((geojson) => {
+			map.addSource("route", {
+				type: "geojson",
+				data: geojson,
+			});
+			map.addLayer(
+				{
+					id: "route",
+					type: "line",
+					source: "route",
+					layout: {
+						"line-join": "round",
+						"line-cap": "round",
+					},
+					paint: {
+						"line-color": "#05cb63",
+						"line-width": 8,
+						"line-opacity": 0.8,
+					},
+				},
+				"road-label-navigation"
+			);
+
+			const coordinates = geojson.features[0].geometry.coordinates;
+
+			// Create a 'LngLatBounds' with both corners at the first coordinate.
+			routeBounds = new mapboxgl.LngLatBounds(
+				coordinates[0],
+				coordinates[0]
+			);
+
+			// Extend the 'LngLatBounds' to include every coordinate in the bounds result.
+			for (const coord of coordinates) {
+				routeBounds.extend(coord);
+			}
+
+			map.fitBounds(routeBounds, {
+				padding: 50,
+			});
+		})
+		.catch((err) => {
+			console.log("Route not found");
+		});
 
 	if (busChange) {
 		changeTrackedBus();

@@ -23,7 +23,7 @@ function updateBusMarker(message) {
 
 			switch (trackingState) {
 				case 0:
-					setTrackingState(2);
+					setTrackingState(1);
 					break;
 				case 1:
 					break;
