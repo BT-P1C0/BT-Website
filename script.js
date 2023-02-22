@@ -2,11 +2,18 @@ const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
 	uuid: "webClient",
 });
-
+pubnub.subscribe({
+	channels: ["bus_notification"],
+});
+var notificationPermission = false;
 pubnub.addListener({
 	message: function (message) {
 		console.log(message.message);
-		updateBusMarker(message.message);
+		if (message.channel != "bus_notification") {
+			updateBusMarker(message.message);
+		} else {
+			notificationHandler(message.message);
+		}
 	},
 	presence: function (message) {
 		console.log(message);
@@ -41,6 +48,35 @@ map.addControl(
 	"bottom-right"
 );
 map.addControl(new busTrackingStateSwitcher(), "bottom-right");
+
+const busList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+const bussesObject = {
+	A: {},
+	B: {},
+	C: {},
+	D: {},
+	E: {},
+	F: {},
+	G: {},
+	H: {},
+	I: {},
+	J: {},
+};
+
+busList.forEach((bus) => {
+	for (let i = 1; i <= 4; i++)
+		fetch(`data/${bus + i}.geojson`)
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				bussesObject[bus][`route${i}`] = data;
+			})
+			.catch((error) => {
+				console.log(`${bus}${i} not found, error: ${error}`);
+				bussesObject[bus][`route${i}`] = null;
+			});
+});
 
 const busInputs = document.getElementById("bus").getElementsByTagName("input");
 const shiftInputs = document
@@ -175,6 +211,19 @@ function changeTrackedBus() {
 	});
 }
 
+function fitRouteOnMap(geojson) {
+	const coordinates = geojson.features[0].geometry.coordinates;
+	// Create a 'LngLatBounds' with both corners at the first coordinate.
+	routeBounds = new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]);
+	// Extend the 'LngLatBounds' to include every coordinate in the bounds result.
+	for (const coord of coordinates) {
+		routeBounds.extend(coord);
+	}
+	map.fitBounds(routeBounds, {
+		padding: 50,
+	});
+}
+
 function changeBusRoute(busChange) {
 	if (map.getLayer("route")) {
 		map.removeLayer("route");
@@ -182,55 +231,50 @@ function changeBusRoute(busChange) {
 	if (map.getSource("route")) {
 		map.removeSource("route");
 	}
-	fetch(`data/${busNo + shiftNo}.geojson`)
-		.then((response) => {
-			return response.json();
-		})
-		.then((geojson) => {
-			map.addSource("route", {
-				type: "geojson",
-				data: geojson,
-			});
-			map.addLayer(
-				{
-					id: "route",
-					type: "line",
-					source: "route",
-					layout: {
-						"line-join": "round",
-						"line-cap": "round",
-					},
-					paint: {
-						"line-color": "#05cb63",
-						"line-width": 8,
-						"line-opacity": 0.8,
-					},
-				},
-				"road-label-navigation"
-			);
-
-			const coordinates = geojson.features[0].geometry.coordinates;
-
-			// Create a 'LngLatBounds' with both corners at the first coordinate.
-			routeBounds = new mapboxgl.LngLatBounds(
-				coordinates[0],
-				coordinates[0]
-			);
-
-			// Extend the 'LngLatBounds' to include every coordinate in the bounds result.
-			for (const coord of coordinates) {
-				routeBounds.extend(coord);
-			}
-
-			map.fitBounds(routeBounds, {
-				padding: 50,
-			});
-		})
-		.catch((err) => {
-			console.log("Route not found");
+	let routeGeoJson = bussesObject[busNo][`route${shiftNo}`];
+	if (routeGeoJson) {
+		map.addSource("route", {
+			type: "geojson",
+			data: routeGeoJson,
 		});
+		map.addLayer(
+			{
+				id: "route",
+				type: "line",
+				source: "route",
+				layout: {
+					"line-join": "round",
+					"line-cap": "round",
+				},
+				paint: {
+					"line-color": "#05cb63",
+					"line-width": 8,
+					"line-opacity": 0.8,
+				},
+			},
+			"road-label-navigation"
+		);
+
+		fitRouteOnMap(routeGeoJson);
+	}
 
 	if (busChange) {
 		changeTrackedBus();
 	}
+}
+
+Notification.requestPermission().then((perm) => {
+	if (perm === "granted") {
+		notificationPermission = true;
+	}
+});
+
+function notificationHandler(message) {
+	if (notificationPermission) {
+		new Notification("Bus Notification", {
+			body: message,
+			icon: "media/favicon-32x32.png",
+		});
+	}
+	window.alert(`New Notification:\n\n${message}`);
 }
