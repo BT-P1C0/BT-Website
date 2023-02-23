@@ -3,16 +3,19 @@ const pubnub = new PubNub({
 	uuid: "webClient",
 });
 pubnub.subscribe({
-	channels: ["bus_notification"],
+	channels: ["bus_notification", "crash_notification"],
 });
 var notificationPermission = false;
+var pubNubSubscribedBusChannel = null;
 pubnub.addListener({
 	message: function (message) {
 		console.log(message.message);
-		if (message.channel != "bus_notification") {
-			updateBusMarker(message.message);
-		} else {
+		if (message.channel === "bus_notification") {
 			notificationHandler(message.message);
+		} else if (message.channel === "crash_notification") {
+			crashNotificationHandler(message.message);
+		} else {
+			updateBusMarker(message.message);
 		}
 	},
 	presence: function (message) {
@@ -187,7 +190,9 @@ updateTimeDelay();
 
 function changeTrackedBus() {
 	let channel = `bus_${busNo}`;
-	pubnub.unsubscribeAll();
+	pubnub.unsubscribe({
+		channels: [pubNubSubscribedBusChannel],
+	});
 	busMarker.remove();
 	busLat = null;
 	busLan = null;
@@ -209,6 +214,8 @@ function changeTrackedBus() {
 	pubnub.subscribe({
 		channels: [channel],
 	});
+
+	pubNubSubscribedBusChannel = channel;
 }
 
 function fitRouteOnMap(geojson) {
@@ -277,4 +284,15 @@ function notificationHandler(message) {
 		});
 	}
 	window.alert(`New Notification:\n\n${message}`);
+}
+
+function crashNotificationHandler(message) {
+	console.log(message);
+	window.alert(
+		`Crash Alert (TEST):\n\nCrash detected for bus ${
+			message.bus
+		} at location ${message.lat}, ${message.lng}\ntime: ${timeInIST(
+			parseUTC(message.utc)
+		)}`
+	);
 }
