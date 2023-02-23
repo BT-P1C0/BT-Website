@@ -20,4 +20,4 @@ Built on [OpenStreetMap](https://www.openstreetmap.org/about/) data and Mapbox G
 -   Neo 6M
 -   SIM 800L
 
-View device code [here](https://github.com/ssDhp/bt-Pico).
+View device code [here](https://github.com/BT-P1C0/BT-Hardware).
