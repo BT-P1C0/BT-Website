@@ -1,29 +1,24 @@
 {
-    "name": "GEHU Bus Tracker",
-    "short_name": "Bus Tracker",
-    "categories": [
-        "navigation"
-    ],
-    "description": "App to track busses.",
-    "icons": [
-        {
-            "src": "media/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "media/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#2c3035",
-    "background_color": "#2c3035",
-    "display_override": [
-        "fullscreen",
-        "minimal-ui"
-    ],
-    "display": "standalone",
-    "orientation": "portrait-primary",
-    "start_url": "https://bt-p1c0.github.io/BT-Website"
+	"name": "GEHU Bus Tracker",
+	"short_name": "Bus Tracker",
+	"categories": ["navigation"],
+	"description": "App to track busses.",
+	"icons": [
+		{
+			"src": "media/android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "media/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"theme_color": "#2c3035",
+	"background_color": "#2c3035",
+	"display_override": ["fullscreen", "minimal-ui"],
+	"display": "standalone",
+	"orientation": "portrait-primary",
+	"start_url": "https://bt-p1c0.github.io/BT-Website"
 }

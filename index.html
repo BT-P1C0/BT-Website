@@ -1,205 +1,205 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Bus Tracker</title>
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
+	<head>
+		<meta charset="utf-8" />
+		<title>Bus Tracker</title>
+		<meta
+			name="viewport"
+			content="initial-scale=1,maximum-scale=1,user-scalable=no"
+		/>
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Bus Tracker" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="Bus Tracker" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-touch-fullscreen" content="yes" />
 
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="media/apple-icon-180.png"
-    />
-    <link
-      rel="apple-touch-icon-precomposed"
-      href="media/apple-touch-icon.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-1136-640.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
-      href="media/apple-splash-2436-1125.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-1792-828.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-828-1792.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-1334-750.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
-      href="media/apple-splash-1242-2688.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
-      href="media/apple-splash-2208-1242.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
-      href="media/apple-splash-1125-2436.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
-      href="media/apple-splash-1242-2688.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-2732-2048.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
-      href="media/apple-splash-2688-1242.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-2224-1668.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-750-1334.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-2048-2732.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-2388-1668.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-1668-2224.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-640-1136.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-1668-2388.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
-      href="media/apple-splash-2048-1536.png"
-    />
-    <link
-      rel="apple-touch-startup-image"
-      media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
-      href="media/apple-splash-1536-2048.png"
-    />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="media/apple-icon-180.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			href="media/apple-touch-icon.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-1136-640.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+			href="media/apple-splash-2436-1125.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-1792-828.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-828-1792.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-1334-750.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+			href="media/apple-splash-1242-2688.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+			href="media/apple-splash-2208-1242.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+			href="media/apple-splash-1125-2436.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+			href="media/apple-splash-1242-2688.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-2732-2048.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+			href="media/apple-splash-2688-1242.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-2224-1668.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-750-1334.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-2048-2732.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-2388-1668.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-1668-2224.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-640-1136.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-1668-2388.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+			href="media/apple-splash-2048-1536.png"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+			href="media/apple-splash-1536-2048.png"
+		/>
 
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="shortcut icon" href="media/android-chrome-192x192.png" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<link rel="shortcut icon" href="media/android-chrome-192x192.png" />
 
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="media/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="media/favicon-16x16.png"
-    />
-    <link rel="manifest" href="manifest.json" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="media/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="media/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="manifest.json" />
 
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.11.1/mapbox-gl.css"
-      rel="stylesheet"
-    />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.1/mapbox-gl.js"></script>
-    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
-    <script src="vendor/busTrackControl.js"></script>
-    <script src="vendor/timeFunctions.js"></script>
-    <script src="vendor/markerFunctions.js"></script>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
+		<link
+			href="https://api.mapbox.com/mapbox-gl-js/v2.11.1/mapbox-gl.css"
+			rel="stylesheet"
+		/>
+		<script src="https://api.mapbox.com/mapbox-gl-js/v2.11.1/mapbox-gl.js"></script>
+		<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
+		<script src="vendor/busTrackControl.js"></script>
+		<script src="vendor/timeFunctions.js"></script>
+		<script src="vendor/markerFunctions.js"></script>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	</head>
 
-  <body>
-    <div id="map"></div>
-    <div id="menu">
-      <fieldset id="bus" class="submenu">
-        <input id="bus-a" type="radio" name="bus-radio" value="A" />
-        <label for="bus-a">Bus A</label>
-        <input id="bus-b" type="radio" name="bus-radio" value="B" />
-        <label for="bus-b">Bus B</label>
-        <input id="bus-c" type="radio" name="bus-radio" value="C" />
-        <label for="bus-c">Bus C</label>
-        <input id="bus-d" type="radio" name="bus-radio" value="D" />
-        <label for="bus-d">Bus D</label>
-        <input id="bus-e" type="radio" name="bus-radio" value="E" />
-        <label for="bus-e">Bus E</label>
-        <input id="bus-f" type="radio" name="bus-radio" value="F" />
-        <label for="bus-f">Bus F</label>
-        <input id="bus-g" type="radio" name="bus-radio" value="G" />
-        <label for="bus-g">Bus G</label>
-        <input
-          id="bus-h"
-          type="radio"
-          name="bus-radio"
-          value="H"
-          checked="checked"
-        />
-        <label for="bus-h">Bus H</label>
-        <input id="bus-i" type="radio" name="bus-radio" value="I" />
-        <label for="bus-i">Bus I</label>
-        <input id="bus-j" type="radio" name="bus-radio" value="J" />
-        <label for="bus-j">Bus J</label>
-      </fieldset>
-      <fieldset id="shift" class="submenu">
-        <input
-          id="shift-1"
-          type="radio"
-          name="shift-radio"
-          value="1"
-          checked="checked"
-        />
-        <label for="shift-1">Shift 1</label>
-        <input id="shift-2" type="radio" name="shift-radio" value="2" />
-        <label for="shift-2">Shift 2</label>
-        <input id="shift-3" type="radio" name="shift-radio" value="3" />
-        <label for="shift-3">Shift 3</label>
-        <input id="shift-4" type="radio" name="shift-radio" value="4" />
-        <label for="shift-4">Shift 4</label>
-      </fieldset>
-    </div>
-    <script src="script.js"></script>
-  </body>
+	<body>
+		<div id="map"></div>
+		<div id="menu">
+			<fieldset id="bus" class="submenu">
+				<input id="bus-a" type="radio" name="bus-radio" value="A" />
+				<label for="bus-a">Bus A</label>
+				<input id="bus-b" type="radio" name="bus-radio" value="B" />
+				<label for="bus-b">Bus B</label>
+				<input id="bus-c" type="radio" name="bus-radio" value="C" />
+				<label for="bus-c">Bus C</label>
+				<input id="bus-d" type="radio" name="bus-radio" value="D" />
+				<label for="bus-d">Bus D</label>
+				<input id="bus-e" type="radio" name="bus-radio" value="E" />
+				<label for="bus-e">Bus E</label>
+				<input id="bus-f" type="radio" name="bus-radio" value="F" />
+				<label for="bus-f">Bus F</label>
+				<input id="bus-g" type="radio" name="bus-radio" value="G" />
+				<label for="bus-g">Bus G</label>
+				<input
+					id="bus-h"
+					type="radio"
+					name="bus-radio"
+					value="H"
+					checked="checked"
+				/>
+				<label for="bus-h">Bus H</label>
+				<input id="bus-i" type="radio" name="bus-radio" value="I" />
+				<label for="bus-i">Bus I</label>
+				<input id="bus-j" type="radio" name="bus-radio" value="J" />
+				<label for="bus-j">Bus J</label>
+			</fieldset>
+			<fieldset id="shift" class="submenu">
+				<input
+					id="shift-1"
+					type="radio"
+					name="shift-radio"
+					value="1"
+					checked="checked"
+				/>
+				<label for="shift-1">Shift 1</label>
+				<input id="shift-2" type="radio" name="shift-radio" value="2" />
+				<label for="shift-2">Shift 2</label>
+				<input id="shift-3" type="radio" name="shift-radio" value="3" />
+				<label for="shift-3">Shift 3</label>
+				<input id="shift-4" type="radio" name="shift-radio" value="4" />
+				<label for="shift-4">Shift 4</label>
+			</fieldset>
+		</div>
+		<script src="script.js"></script>
+	</body>
 </html>
