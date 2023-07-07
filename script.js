@@ -38,7 +38,7 @@ const map = new mapboxgl.Map({
 	hash: true,
 	maxPitch: 45,
 	doubleClickZoom: false,
-	customAttribution: "<a href = 'https://github.com/BT-P1C0>BT-P1C0</a>",
+	customAttribution: "<a href = 'https://github.com/BT-P1C0'>BT-P1C0</a>",
 });
 
 map.addControl(
