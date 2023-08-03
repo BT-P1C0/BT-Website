@@ -96,3 +96,23 @@ body {
 .mapboxgl-user-location {
 	z-index: 2;
 }
+
+@media only screen and (max-width: 600px) {
+	.mapboxgl-ctrl-group button {
+		height: 50px;
+		width: 50px;
+	}
+
+	.mapboxgl-ctrl-attrib.mapboxgl-compact {
+		min-width: 50px;
+		min-height: 50px;
+	}
+
+	.mapboxgl-ctrl-attrib-button {
+		height: 50px;
+		width: 50px;
+	}
+	.mapboxgl-ctrl-attrib.mapboxgl-compact-show {
+		padding-right: 58px;
+	}
+}
