@@ -39,7 +39,7 @@ const map = new mapboxgl.Map({
 	maxPitch: 45,
 	doubleClickZoom: false,
 	customAttribution:
-		"<a href='https://github.com/BT-P1C0' target=_blank style='font-weight:bold;'>BT-P1C0</a>",
+		"<a href='https://github.com/BT-P1C0' target=_blank style='font-weight:bold;'>BT-P1C0</a> | <a href='https://github.com/BT-P1C0' target=_blank>Lakshyajeet Jalal</a> & <a href='https://github.com/BT-P1C0' target=_blank>Shriyansh Dhapola</a>",
 });
 
 map.addControl(
