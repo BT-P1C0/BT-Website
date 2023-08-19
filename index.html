@@ -149,55 +149,176 @@
 		<script src="vendor/busTrackControl.js"></script>
 		<script src="vendor/timeFunctions.js"></script>
 		<script src="vendor/markerFunctions.js"></script>
+		<script src="vendor/busMenuControl.js"></script>
 		<link href="style.css" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body>
 		<div id="map"></div>
-		<div id="menu">
+		<div id="menu" class="">
+			<a id="menu-close" onclick="hideBusMenu()">&#10006</a>
+			<h3>Bus</h3>
 			<fieldset id="bus" class="submenu">
-				<input id="bus-a" type="radio" name="bus-radio" value="A" />
-				<label for="bus-a">Bus A</label>
-				<input id="bus-b" type="radio" name="bus-radio" value="B" />
-				<label for="bus-b">Bus B</label>
-				<input id="bus-c" type="radio" name="bus-radio" value="C" />
-				<label for="bus-c">Bus C</label>
-				<input id="bus-d" type="radio" name="bus-radio" value="D" />
-				<label for="bus-d">Bus D</label>
-				<input id="bus-e" type="radio" name="bus-radio" value="E" />
-				<label for="bus-e">Bus E</label>
-				<input id="bus-f" type="radio" name="bus-radio" value="F" />
-				<label for="bus-f">Bus F</label>
-				<input id="bus-g" type="radio" name="bus-radio" value="G" />
-				<label for="bus-g">Bus G</label>
-				<input
-					id="bus-h"
-					type="radio"
-					name="bus-radio"
-					value="H"
-					checked="checked"
-				/>
-				<label for="bus-h">Bus H</label>
-				<input id="bus-i" type="radio" name="bus-radio" value="I" />
-				<label for="bus-i">Bus I</label>
-				<input id="bus-j" type="radio" name="bus-radio" value="J" />
-				<label for="bus-j">Bus J</label>
+				<div class="submenu-item" id="bus-a-item">
+					<label for="bus-a" class="submenu-label"
+						><input
+							id="bus-a"
+							type="radio"
+							name="bus-radio"
+							value="A"
+							class="hidden-radio"
+						/>A</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-b-item">
+					<label for="bus-b" class="submenu-label"
+						><input
+							id="bus-b"
+							type="radio"
+							name="bus-radio"
+							value="B"
+							class="hidden-radio"
+						/>B</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-c-item">
+					<label for="bus-c" class="submenu-label"
+						><input
+							id="bus-c"
+							type="radio"
+							name="bus-radio"
+							value="C"
+							class="hidden-radio"
+						/>C</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-d-item">
+					<label for="bus-d" class="submenu-label"
+						><input
+							id="bus-d"
+							type="radio"
+							name="bus-radio"
+							value="D"
+							class="hidden-radio"
+						/>D</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-e-item">
+					<label for="bus-e" class="submenu-label"
+						><input
+							id="bus-e"
+							type="radio"
+							name="bus-radio"
+							value="E"
+							class="hidden-radio"
+						/>E</label
+					>
+				</div>
+
+				<div class="submenu-item" id="bus-f-item">
+					<label for="bus-f" class="submenu-label"
+						><input
+							id="bus-f"
+							type="radio"
+							name="bus-radio"
+							value="F"
+							class="hidden-radio"
+						/>F</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-g-item">
+					<label for="bus-g" class="submenu-label"
+						><input
+							id="bus-g"
+							type="radio"
+							name="bus-radio"
+							value="G"
+							class="hidden-radio"
+						/>G</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-h-item">
+					<label for="bus-h" class="submenu-label"
+						><input
+							id="bus-h"
+							type="radio"
+							name="bus-radio"
+							value="H"
+							checked="checked"
+							class="hidden-radio"
+						/>H</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-i-item">
+					<label for="bus-i" class="submenu-label"
+						><input
+							id="bus-i"
+							type="radio"
+							name="bus-radio"
+							value="I"
+							class="hidden-radio"
+						/>I</label
+					>
+				</div>
+				<div class="submenu-item" id="bus-j-item">
+					<label for="bus-j" class="submenu-label"
+						><input
+							id="bus-j"
+							type="radio"
+							name="bus-radio"
+							value="J"
+							class="hidden-radio"
+						/>J</label
+					>
+				</div>
 			</fieldset>
+			<h3>Shifts</h3>
 			<fieldset id="shift" class="submenu">
-				<input
-					id="shift-1"
-					type="radio"
-					name="shift-radio"
-					value="1"
-					checked="checked"
-				/>
-				<label for="shift-1">Morning Shift (9AM)</label>
-				<input id="shift-2" type="radio" name="shift-radio" value="2" />
-				<label for="shift-2">Morning Shift (12PM)</label>
-				<input id="shift-3" type="radio" name="shift-radio" value="3" />
-				<label for="shift-3">Afternoom Shift (1PM)</label>
-				<input id="shift-4" type="radio" name="shift-radio" value="4" />
-				<label for="shift-4">Evening Shift (4PM)</label>
+				<div class="submenu-item" id="shift-1-item">
+					<label for="shift-1" class="submenu-label"
+						><input
+							id="shift-1"
+							type="radio"
+							name="shift-radio"
+							value="1"
+							checked="checked"
+							class="hidden-radio"
+						/>Morning<br />(9AM)</label
+					>
+				</div>
+				<div class="submenu-item" id="shift-2-item">
+					<label for="shift-2" class="submenu-label"
+						><input
+							id="shift-2"
+							type="radio"
+							name="shift-radio"
+							value="2"
+							class="hidden-radio"
+						/>Morning<br />(12PM)</label
+					>
+				</div>
+				<div class="submenu-item" id="shift-3-item">
+					<label for="shift-3" class="submenu-label"
+						><input
+							id="shift-3"
+							type="radio"
+							name="shift-radio"
+							value="3"
+							class="hidden-radio"
+						/>Afternoom<br />(1PM)</label
+					>
+				</div>
+				<div class="submenu-item" id="shift-4-item">
+					<label for="shift-4" class="submenu-label"
+						><input
+							id="shift-4"
+							type="radio"
+							name="shift-radio"
+							value="4"
+							class="hidden-radio"
+						/>Evening<br />(4PM)</label
+					>
+				</div>
 			</fieldset>
 		</div>
 		<script src="script.js"></script>

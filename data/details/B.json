@@ -1,0 +1,14 @@
+{
+	"bus": {
+		"letter": "B",
+		"license": "UK04PA1787"
+	},
+	"driver": {
+		"name": "Raj Kumar",
+		"phone": "9458344915"
+	},
+	"helper": {
+		"name": "Amar Singh",
+		"phone": "9568490925"
+	}
+}

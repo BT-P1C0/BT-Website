@@ -53,6 +53,7 @@ map.addControl(
 	"bottom-right"
 );
 map.addControl(new busTrackingStateSwitcher(), "bottom-right");
+map.addControl(new busMenuShowButton(), "top-left");
 
 const busList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const bussesObject = {
@@ -70,7 +71,7 @@ const bussesObject = {
 
 busList.forEach((bus) => {
 	for (let i = 1; i <= 4; i++)
-		fetch(`data/${bus + i}.geojson`)
+		fetch(`data/routes/${bus + i}.geojson`)
 			.then((response) => {
 				return response.json();
 			})
@@ -81,6 +82,17 @@ busList.forEach((bus) => {
 				console.log(`${bus}${i} not found, error: ${error}`);
 				bussesObject[bus][`route${i}`] = null;
 			});
+	fetch(`data/details/${bus}.json`)
+		.then((response) => {
+			return response.json();
+		})
+		.then((data) => {
+			bussesObject[bus].details = data;
+		})
+		.catch((error) => {
+			console.log(`${bus} data not found, error: ${error}`);
+			bussesObject[bus].details = null;
+		});
 });
 
 const busInputs = document.getElementById("bus").getElementsByTagName("input");
@@ -90,21 +102,44 @@ const shiftInputs = document
 
 for (const input of busInputs) {
 	input.onclick = (bus) => {
+		if (busNo) {
+			document
+				.getElementById(`bus-${busNo.toLowerCase()}-item`)
+				.classList.remove("submenu-item-selected");
+		}
 		busNo = bus.target.value;
-		changeBusRoute(true);
+		document
+			.getElementById(`bus-${busNo.toLowerCase()}-item`)
+			.classList.add("submenu-item-selected"); // Highlight Clicked button
+
+		changeBusRoute((busChange = true));
 	};
 	if (input.checked) {
 		busNo = input.value;
+		document
+			.getElementById(`bus-${busNo.toLowerCase()}-item`)
+			.classList.add("submenu-item-selected");
 	}
 }
 
 for (const input of shiftInputs) {
 	input.onclick = (shift) => {
+		if (shiftNo) {
+			document
+				.getElementById(`shift-${shiftNo}-item`)
+				.classList.remove("submenu-item-selected");
+		}
 		shiftNo = shift.target.value;
+		document
+			.getElementById(`shift-${shiftNo}-item`)
+			.classList.add("submenu-item-selected");
 		changeBusRoute();
 	};
 	if (input.checked) {
 		shiftNo = input.value;
+		document
+			.getElementById(`shift-${shiftNo}-item`)
+			.classList.add("submenu-item-selected");
 	}
 }
 
@@ -191,6 +226,8 @@ busMarkerElement.ondblclick = () => {
 updateTimeDelay();
 
 function changeTrackedBus() {
+	document.getElementById("bus-menu-button").innerHTML = `<a>${busNo}</a>`;
+
 	let channel = `bus_${busNo}`;
 	pubnub.unsubscribe({
 		channels: [pubNubSubscribedBusChannel],
