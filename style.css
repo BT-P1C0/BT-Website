@@ -76,6 +76,7 @@ body {
 	padding-top: 0.5em !important;
 	padding: 0.75em;
 	cursor: pointer;
+	color: #ffffff;
 }
 
 #menu-close:hover {
@@ -197,5 +198,6 @@ body {
 	}
 	#menu {
 		top: 0;
+		width: 90%;
 	}
 }
