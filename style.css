@@ -197,7 +197,9 @@ body {
 		justify-content: center;
 	}
 	#menu {
-		top: 0;
+		display: none;
+		top: 20%;
+		height: auto;
 		width: 90%;
 	}
 }
