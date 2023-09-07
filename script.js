@@ -4,7 +4,7 @@ mapboxgl.accessToken =
 
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
-	uuid: "website",
+	uuid: "webClient",
 });
 
 pubnub.subscribe({
