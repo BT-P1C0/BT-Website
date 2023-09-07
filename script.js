@@ -1,9 +1,12 @@
 const dataBaseUrl = "https://raw.githubusercontent.com/BT-P1C0/BT-DATA/main/";
+mapboxgl.accessToken =
+	"pk.eyJ1IjoibGFrc2h5YWplZXQiLCJhIjoiY2xtOG5qMmY2MGVmcDNjbG1wcTZubm14aiJ9.rmFsEnCnxsuaaAS4jhrF-g";
 
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
-	uuid: "webClient",
+	uuid: "website",
 });
+
 pubnub.subscribe({
 	channels: ["bus_notification", "crash_notification"],
 });
@@ -28,9 +31,6 @@ pubnub.addListener({
 		updateBusMarker(message.message);
 	},
 });
-
-mapboxgl.accessToken =
-	"pk.eyJ1IjoibGFrc2h5YWplZXQiLCJhIjoiY2tuMWM2amttMHN0NDJ3cXVxOGJsY3p4MiJ9.LuGi_8FfhyDQHtWqHRgcjw";
 
 const map = new mapboxgl.Map({
 	container: "map",
