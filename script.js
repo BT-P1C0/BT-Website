@@ -1,3 +1,5 @@
+const dataBaseUrl = "https://raw.githubusercontent.com/BT-P1C0/BT-DATA/main/";
+
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
 	uuid: "webClient",
@@ -71,7 +73,7 @@ const bussesObject = {
 
 busList.forEach((bus) => {
 	for (let i = 1; i <= 4; i++)
-		fetch(`data/routes/${bus + i}.geojson`)
+		fetch(`${dataBaseUrl}/routes/${bus + i}.geojson`)
 			.then((response) => {
 				return response.json();
 			})
@@ -82,7 +84,7 @@ busList.forEach((bus) => {
 				console.log(`${bus}${i} not found, error: ${error}`);
 				bussesObject[bus][`route${i}`] = null;
 			});
-	fetch(`data/details/${bus}.json`)
+	fetch(`${dataBaseUrl}/details/${bus}.json`)
 		.then((response) => {
 			return response.json();
 		})
