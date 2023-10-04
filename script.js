@@ -8,7 +8,7 @@ const pubnub = new PubNub({
 });
 
 pubnub.subscribe({
-	channels: ["bus_notification", "crash_notification"],
+	channels: ["bus_notification", "crash_notification", "debug_channel"],
 });
 var notificationPermission = false;
 var pubNubSubscribedBusChannel = null;
@@ -19,6 +19,8 @@ pubnub.addListener({
 			notificationHandler(message.message);
 		} else if (message.channel === "crash_notification") {
 			crashNotificationHandler(message.message);
+		} else if (message.channel === "debug_channel") {
+			console.log(message.message);
 		} else {
 			updateBusMarker(message.message);
 		}
