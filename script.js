@@ -59,7 +59,22 @@ map.addControl(
 map.addControl(new busTrackingStateSwitcher(), "bottom-right");
 map.addControl(new busMenuShowButton(), "top-left");
 
-const busList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+const busList = [
+	"A",
+	"B",
+	"C",
+	"D",
+	"E",
+	"F",
+	"G",
+	"H",
+	"I",
+	"J",
+	"K",
+	"L",
+	"M",
+	"N",
+];
 const bussesObject = {
 	A: {},
 	B: {},
@@ -71,6 +86,9 @@ const bussesObject = {
 	H: {},
 	I: {},
 	J: {},
+	K: {},
+	L: {},
+	M: {},
 };
 
 busList.forEach((bus) => {
