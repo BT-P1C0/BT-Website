@@ -1,4 +1,4 @@
-const dataBaseUrl = "https://raw.githubusercontent.com/BT-P1C0/BT-DATA/main/";
+const dataBaseUrl = "https://raw.githubusercontent.com/BT-P1C0/BT-DATA/main";
 mapboxgl.accessToken =
 	"pk.eyJ1IjoibGFrc2h5YWplZXQiLCJhIjoiY2xtOG5qMmY2MGVmcDNjbG1wcTZubm14aiJ9.rmFsEnCnxsuaaAS4jhrF-g";
 
