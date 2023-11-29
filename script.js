@@ -234,11 +234,7 @@ const busMarker = new mapboxgl.Marker({
 	.setLngLat([0, 0])
 	.addTo(map)
 	.setPopup(busMarkerPopup);
-if ("vibrate" in navigator) {
-	busMarkerElement.onclick = () => {
-		navigator.vibrate(250);
-	};
-}
+
 busMarkerElement.ondblclick = () => {
 	setTrackingState(2);
 };
