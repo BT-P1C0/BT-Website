@@ -8,7 +8,7 @@ const pubnub = new PubNub({
 });
 
 pubnub.subscribe({
-	channels: ["bus_notification", "crash_notification", "debug_channel"],
+	channels: ["bus_notification", "debug_channel"],
 });
 var notificationPermission = false;
 var pubNubSubscribedBusChannel = null;
@@ -17,8 +17,6 @@ pubnub.addListener({
 		console.log(message.message);
 		if (message.channel === "bus_notification") {
 			notificationHandler(message.message);
-		} else if (message.channel === "crash_notification") {
-			crashNotificationHandler(message.message);
 		} else if (message.channel === "debug_channel") {
 			console.log(message.message);
 		} else {
@@ -329,31 +327,4 @@ function changeBusRoute(busChange) {
 	if (busChange) {
 		changeTrackedBus();
 	}
-}
-
-Notification.requestPermission().then((perm) => {
-	if (perm === "granted") {
-		notificationPermission = true;
-	}
-});
-
-function notificationHandler(message) {
-	if (notificationPermission) {
-		new Notification("Bus Notification", {
-			body: message,
-			icon: "media/favicon-32x32.png",
-		});
-	}
-	window.alert(`New Notification:\n\n${message}`);
-}
-
-function crashNotificationHandler(message) {
-	console.log(message);
-	window.alert(
-		`Crash Alert (TEST):\n\nCrash detected for bus ${
-			message.bus
-		} at location ${message.lat}, ${message.lng}\ntime: ${timeInIST(
-			parseUTC(message.utc)
-		)}`
-	);
 }
