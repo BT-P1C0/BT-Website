@@ -34,12 +34,42 @@ function updateBusMarker(message) {
 					setTrackingState(2);
 					break;
 			}
+			if (
+				busMarker.getElement().parentNode === map.getCanvasContainer()
+			) {
+				animateMarker(busMarker, busLat, busLng);
+			} else {
+				busMarker.setLngLat([busLng, busLat]);
+				busMarker.addTo(map);
+			}
 
-			busMarker.addTo(map);
-			busMarker.setLngLat([busLng, busLat]);
 			updateBusMarkerPopup();
 		} catch (err) {
 			console.log(err);
 		}
 	}
+}
+
+function animateMarker(marker, destination_lat, destination_lng) {
+	var start = marker.getLngLat();
+	var end = {
+		lng: destination_lng,
+		lat: destination_lat,
+	};
+	var duration = 1000; // Animation duration in milliseconds
+	var startTime = document.timeline.currentTime;
+
+	function animate(time) {
+		var elapsedTime = time - startTime;
+		var progress = Math.min(elapsedTime / duration, 1);
+		var lng = start.lng + (end.lng - start.lng) * progress;
+		var lat = start.lat + (end.lat - start.lat) * progress;
+		marker.setLngLat([lng, lat]);
+
+		if (progress < 1) {
+			requestAnimationFrame(animate);
+		}
+	}
+
+	requestAnimationFrame(animate);
 }

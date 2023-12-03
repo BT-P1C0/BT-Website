@@ -4,7 +4,7 @@ mapboxgl.accessToken =
 
 const pubnub = new PubNub({
 	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
-	uuid: "webClient",
+	uuid: `web-${getOS()}`,
 });
 
 pubnub.subscribe({
@@ -41,7 +41,7 @@ const map = new mapboxgl.Map({
 	maxPitch: 45,
 	doubleClickZoom: false,
 	customAttribution:
-		"<a href='https://github.com/BT-P1C0' target=_blank style='font-weight:bold;'>BT-P1C0</a> | <a href='https://github.com/BT-P1C0' target=_blank>Lakshyajeet Jalal</a> & <a href='https://github.com/BT-P1C0' target=_blank>Shriyansh Dhapola</a>",
+		"<a href='https://github.com/BT-P1C0' target=_blank style='font-weight:bold;'>BT-P1C0</a> | <a href='https://github.com/MG-LSJ' target=_blank>Lakshyajeet Jalal</a> & <a href='https://github.com/ssDhp' target=_blank>Shriyansh Dhapola</a>",
 });
 
 map.addControl(
@@ -323,4 +323,27 @@ function changeBusRoute(busChange) {
 	if (busChange) {
 		changeTrackedBus();
 	}
+}
+
+function getOS() {
+	var userAgent = window.navigator.userAgent,
+		platform = window.navigator.platform,
+		macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"],
+		windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"],
+		iosPlatforms = ["iPhone", "iPad", "iPod"],
+		os = null;
+
+	if (macosPlatforms.indexOf(platform) !== -1) {
+		os = "mac";
+	} else if (iosPlatforms.indexOf(platform) !== -1) {
+		os = "ios";
+	} else if (windowsPlatforms.indexOf(platform) !== -1) {
+		os = "windows";
+	} else if (/Android/.test(userAgent)) {
+		os = "android";
+	} else if (!os && /Linux/.test(platform)) {
+		os = "linux";
+	}
+
+	return os;
 }

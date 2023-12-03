@@ -25,7 +25,6 @@ class busTrackingStateSwitcher {
 					setTrackingState(1);
 					break;
 				case 3:
-					map.flyTo({ center: [busLng, busLat], zoom: 15 });
 					setTrackingState(2);
 					break;
 			}
@@ -81,7 +80,8 @@ function setTrackingState(state) {
 			btn.classList.add("focused");
 			btn.classList.add("locked");
 			trackingState = 2;
-			map.flyTo({ center: [busLng, busLat], zoom: 15 });
+			var zoom = map.getZoom() < 15 ? 15 : map.getZoom();
+			map.flyTo({ center: [busLng, busLat], zoom: zoom });
 			break;
 		case 3:
 			btn.classList.remove("searching");
