@@ -1,8 +1,10 @@
-// 	Tracking states -
-// 		0: searching
-// 		1: unlocked
-// 		2: locked & focused
-// 		3: locked & unfocus
+/* 	
+Tracking states -
+ 	0: searching
+	1: unlocked
+	2: locked & focused
+	3: locked & unfocus
+*/
 
 var trackingState = 0;
 var routeBounds;
