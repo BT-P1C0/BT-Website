@@ -13,11 +13,12 @@ function updateBusMarkerPopup() {
 	}
 }
 function updateBusMarker(message) {
-	if (message.lat && message.lng) {
+	if (message) {
 		try {
-			busLat = message.lat;
-			busLng = message.lng;
-			parsedUtcTime = parseUTC(message.utc);
+			var [lat, lng, utc] = message.split(",");
+			busLat = Number(lat);
+			busLng = Number(lng);
+			parsedUtcTime = parseUTC(Number(utc));
 
 			console.log("Time Delta: " + timeDelta(parsedUtcTime));
 

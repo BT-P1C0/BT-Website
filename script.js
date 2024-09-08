@@ -2,34 +2,30 @@ const dataBaseUrl = "https://raw.githubusercontent.com/BT-P1C0/BT-DATA/main";
 mapboxgl.accessToken =
 	"pk.eyJ1IjoibGFrc2h5YWplZXQiLCJhIjoiY2xtOG5qMmY2MGVmcDNjbG1wcTZubm14aiJ9.rmFsEnCnxsuaaAS4jhrF-g";
 
-const pubnub = new PubNub({
-	subscribeKey: "sub-c-10e0e350-30c8-4f8c-84dc-659f6954424e",
-	uuid: `web-${getOS()}`,
+const brokerUrl = "wss://test.mosquitto.org:8081"; // WebSocket Secure URL to an MQTT broker
+var topic = "";
+
+// Create a client instance
+const client = mqtt.connect(brokerUrl);
+
+// When the client connects
+client.on("connect", () => {
+	console.log("Connected to broker");
 });
 
-pubnub.subscribe({
-	channels: ["bus_notification", "debug_channel"],
+// When a message arrives
+client.on("message", (topic, message) => {
+	// Convert message to string and display it
+	console.log(`Received message on topic ${topic}`);
+	console.log(message.toString());
+	updateBusMarker(message.toString());
 });
-var notificationPermission = false;
-var pubNubSubscribedBusChannel = null;
-pubnub.addListener({
-	message: function (message) {
-		console.log(message.message);
-		if (message.channel === "bus_notification") {
-			notificationHandler(message.message);
-		} else if (message.channel === "debug_channel") {
-			console.log(message.message);
-		} else {
-			updateBusMarker(message.message);
-		}
-	},
-	presence: function (message) {
-		console.log(message);
-	},
-	signal: function (message) {
-		console.log(message.message);
-		updateBusMarker(message.message);
-	},
+
+// If there’s a connection error
+client.on("error", (error) => {
+	console.error(`Connection error: ${error}`);
+	document.getElementById("status").textContent =
+		`Connection error: ${error}`;
 });
 
 const map = new mapboxgl.Map({
@@ -244,33 +240,20 @@ updateTimeDelay();
 function changeTrackedBus() {
 	document.getElementById("bus-menu-button").innerHTML = `<a>${busNo}</a>`;
 
-	let channel = `bus_${busNo}`;
-	pubnub.unsubscribe({
-		channels: [pubNubSubscribedBusChannel],
-	});
+	client.unsubscribe(topic, (err) => {});
+
 	busMarker.remove();
 	busLat = null;
 	busLan = null;
 	setTrackingState(0);
-	try {
-		pubnub.fetchMessages(
-			{
-				channels: [channel],
-				count: 1,
-			},
-			function (status, response) {
-				if ((status.statusCode = 200) && response)
-					updateBusMarker(response.channels[channel][0].message);
-			}
-		);
-	} catch {
-		console.log("Unable to load history.");
-	}
-	pubnub.subscribe({
-		channels: [channel],
-	});
 
-	pubNubSubscribedBusChannel = channel;
+	topic = `bus/${busNo.toLowerCase()}`;
+
+	client.subscribe(topic, (err) => {
+		if (!err) {
+			console.log(`Subscribed to topic: ${topic}`);
+		}
+	});
 }
 
 function fitRouteOnMap(geojson) {
